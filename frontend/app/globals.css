@@ -1,0 +1,255 @@
+:root {
+  --bg: #0f1115;
+  --panel: #171a21;
+  --ink: #e6e8ec;
+  --muted: #9aa3b2;
+  --accent: #5b9dff;
+  --warn: #f0b429;
+  --bad: #ff6b6b;
+  --ok: #4cc38a;
+  --border: #262b35;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+header.app {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+header.app h1 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.verdict {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #1d2733;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--border);
+}
+
+.health {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.health .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.dot.ok {
+  background: var(--ok);
+}
+.dot.bad {
+  background: var(--bad);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr 380px;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "left center right"
+    "bottom bottom bottom";
+  gap: 14px;
+  padding: 14px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "left" "center" "right" "bottom";
+  }
+}
+
+.area-left {
+  grid-area: left;
+}
+.area-center {
+  grid-area: center;
+}
+.area-right {
+  grid-area: right;
+}
+.area-bottom {
+  grid-area: bottom;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+textarea {
+  width: 100%;
+  min-height: 200px;
+  background: #0c0e12;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+input[type="text"] {
+  width: 100%;
+  background: #0c0e12;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+button {
+  background: var(--accent);
+  color: #08111f;
+  border: 0;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+button.secondary {
+  background: #222834;
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.claim {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: #12151b;
+}
+.claim:hover {
+  border-color: var(--accent);
+}
+.claim.selected {
+  border-color: var(--accent);
+  background: #18202c;
+}
+.claim .meta {
+  font-size: 11px;
+  color: var(--muted);
+}
+.claim .snippet {
+  font-size: 12px;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: #1d2733;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  margin-right: 5px;
+}
+.tag.warn {
+  color: var(--warn);
+}
+.tag.bad {
+  color: var(--bad);
+}
+
+ul.items {
+  margin: 0;
+  padding-left: 16px;
+}
+ul.items li {
+  margin: 5px 0;
+  font-size: 12px;
+}
+
+.kv {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 2px 0;
+  word-break: break-all;
+}
+.kv code {
+  color: var(--ink);
+}
+
+.error {
+  border-left: 3px solid var(--bad);
+  padding-left: 10px;
+  color: #ffd0d0;
+  font-size: 13px;
+}
+
+pre.report {
+  background: #0c0e12;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  overflow: auto;
+  font-size: 12px;
+  max-height: 360px;
+  white-space: pre-wrap;
+}
+
+svg.graph {
+  width: 100%;
+  height: 360px;
+  background: #0c0e12;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}

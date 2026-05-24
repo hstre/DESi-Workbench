@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "desi-workbench-backend"
+version = "0.1.0a0"
+description = "DESi Workbench backend: a FastAPI app that makes the DESi governance library visible (paper review assistant). It does not modify or re-implement the DESi core."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Hanns-Steffen Rentschler" }]
+keywords = ["desi", "epistemic audit", "paper review", "reviewer assistant", "fastapi"]
+
+# The workbench uses the REAL DESi governance library as an installable
+# dependency. It never re-implements the replay kernel, governance core,
+# concept gates, determinism scanner, or artifact format.
+dependencies = [
+    "desi-governance>=0.1.0a0",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0", "httpx>=0.27"]
+
+[tool.setuptools]
+packages = ["app"]

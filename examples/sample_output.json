@@ -1,0 +1,977 @@
+{
+  "claims": [
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_1",
+      "overclaim_terms": [
+        "first",
+        "generalizes",
+        "solves"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "We present the first method that solves the long-standing problem of generalization in learning systems."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_2",
+      "overclaim_terms": [
+        "novel",
+        "robust",
+        "generalizes",
+        "proves"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "Our novel approach generalizes to any task and proves robust under arbitrary conditions."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_3",
+      "overclaim_terms": [
+        "significant",
+        "state of the art"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "We claim significant gains and argue that the method sets a new state of the art."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_4",
+      "overclaim_terms": [
+        "generalizes"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "Earlier approaches struggle to generalize beyond the setting they were designed for."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_5",
+      "overclaim_terms": [
+        "solves"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "We introduce a method that, we argue, solves this difficulty once and for all."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_6",
+      "overclaim_terms": [
+        "novel",
+        "robust",
+        "proves"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "The idea is novel, and we expect it to prove robust where previous ideas fall short."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_7",
+      "overclaim_terms": [],
+      "section": "Method",
+      "supported": false,
+      "text": "Our method applies a sequence of transformations to the input and returns a refined representation."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_8",
+      "overclaim_terms": [],
+      "section": "Method",
+      "supported": false,
+      "text": "The procedure is simple and, we believe, broadly applicable across any domain."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_9",
+      "overclaim_terms": [],
+      "section": "Results",
+      "supported": false,
+      "text": "Our approach achieves high accuracy and strong performance on a dataset."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_10",
+      "overclaim_terms": [
+        "robust",
+        "generalizes"
+      ],
+      "section": "Results",
+      "supported": false,
+      "text": "The method generalizes and remains robust throughout."
+    },
+    {
+      "category": "result_claim",
+      "has_numbers": false,
+      "id": "claim_11",
+      "overclaim_terms": [
+        "significant"
+      ],
+      "section": "Results",
+      "supported": false,
+      "text": "We observe consistent gains, and the improvements look significant relative to what one would naively expect."
+    },
+    {
+      "category": "limitation_claim",
+      "has_numbers": false,
+      "id": "claim_12",
+      "overclaim_terms": [],
+      "section": "Limitations",
+      "supported": false,
+      "text": "However, the method does not yet handle noisy inputs well, and a careful treatment of failure modes remains future work."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_13",
+      "overclaim_terms": [
+        "first",
+        "significant",
+        "robust",
+        "generalizes",
+        "solves",
+        "proves"
+      ],
+      "section": "Conclusion",
+      "supported": false,
+      "text": "We have presented the first approach that solves generalization, stays robust, and proves significant in practice."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_14",
+      "overclaim_terms": [
+        "novel",
+        "generalizes"
+      ],
+      "section": "Conclusion",
+      "supported": false,
+      "text": "The method is novel and, we argue, generalizes to any future task."
+    }
+  ],
+  "evidence_gaps": [
+    {
+      "claim_id": "claim_1",
+      "id": "gap_1",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Abstract"
+    },
+    {
+      "claim_id": "claim_2",
+      "id": "gap_2",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Abstract"
+    },
+    {
+      "claim_id": "claim_3",
+      "id": "gap_3",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Abstract"
+    },
+    {
+      "claim_id": "claim_4",
+      "id": "gap_4",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Introduction"
+    },
+    {
+      "claim_id": "claim_5",
+      "id": "gap_5",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Introduction"
+    },
+    {
+      "claim_id": "claim_6",
+      "id": "gap_6",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Introduction"
+    },
+    {
+      "claim_id": "claim_8",
+      "id": "gap_7",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Method"
+    },
+    {
+      "claim_id": "claim_10",
+      "id": "gap_8",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Results"
+    },
+    {
+      "claim_id": "claim_11",
+      "id": "gap_9",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Results"
+    },
+    {
+      "claim_id": "claim_13",
+      "id": "gap_10",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Conclusion"
+    },
+    {
+      "claim_id": "claim_14",
+      "id": "gap_11",
+      "missing": "inline_support",
+      "note": "Strong claim with no inline data, citation, or table/figure reference.",
+      "section": "Conclusion"
+    }
+  ],
+  "graph": {
+    "edges": [
+      {
+        "source": "paper",
+        "target": "claim_1",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_2",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_3",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_4",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_5",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_6",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_7",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_8",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_9",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_10",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_11",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_12",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_13",
+        "type": "contains"
+      },
+      {
+        "source": "paper",
+        "target": "claim_14",
+        "type": "contains"
+      },
+      {
+        "source": "claim_1",
+        "target": "overclaim_1",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_2",
+        "target": "overclaim_2",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_3",
+        "target": "overclaim_3",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_4",
+        "target": "overclaim_4",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_5",
+        "target": "overclaim_5",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_6",
+        "target": "overclaim_6",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_10",
+        "target": "overclaim_7",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_11",
+        "target": "overclaim_8",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_13",
+        "target": "overclaim_9",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_14",
+        "target": "overclaim_10",
+        "type": "has_overclaim_risk"
+      },
+      {
+        "source": "claim_1",
+        "target": "gap_1",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_2",
+        "target": "gap_2",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_3",
+        "target": "gap_3",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_4",
+        "target": "gap_4",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_5",
+        "target": "gap_5",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_6",
+        "target": "gap_6",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_8",
+        "target": "gap_7",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_10",
+        "target": "gap_8",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_11",
+        "target": "gap_9",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_13",
+        "target": "gap_10",
+        "type": "has_gap"
+      },
+      {
+        "source": "claim_14",
+        "target": "gap_11",
+        "type": "has_gap"
+      },
+      {
+        "source": "paper",
+        "target": "repro_1",
+        "type": "has_reproducibility_risk"
+      },
+      {
+        "source": "paper",
+        "target": "repro_2",
+        "type": "has_reproducibility_risk"
+      },
+      {
+        "source": "paper",
+        "target": "repro_3",
+        "type": "has_reproducibility_risk"
+      },
+      {
+        "source": "paper",
+        "target": "repro_4",
+        "type": "has_reproducibility_risk"
+      },
+      {
+        "source": "paper",
+        "target": "repro_5",
+        "type": "has_reproducibility_risk"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "paper",
+        "label": "A Novel Method That Solves Generalization and Proves Robust Across Tasks",
+        "type": "paper"
+      },
+      {
+        "id": "claim_1",
+        "label": "[novelty_claim] We present the first method that solves the long-standing problem of generaliza\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_2",
+        "label": "[novelty_claim] Our novel approach generalizes to any task and proves robust under arbitrary co\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_3",
+        "label": "[method_claim] We claim significant gains and argue that the method sets a new state of the ar\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_4",
+        "label": "[generalization_claim] Earlier approaches struggle to generalize beyond the setting they were designed\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_5",
+        "label": "[method_claim] We introduce a method that, we argue, solves this difficulty once and for all.",
+        "type": "claim"
+      },
+      {
+        "id": "claim_6",
+        "label": "[novelty_claim] The idea is novel, and we expect it to prove robust where previous ideas fall s\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_7",
+        "label": "[method_claim] Our method applies a sequence of transformations to the input and returns a ref\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_8",
+        "label": "[generalization_claim] The procedure is simple and, we believe, broadly applicable across any domain.",
+        "type": "claim"
+      },
+      {
+        "id": "claim_9",
+        "label": "[method_claim] Our approach achieves high accuracy and strong performance on a dataset.",
+        "type": "claim"
+      },
+      {
+        "id": "claim_10",
+        "label": "[generalization_claim] The method generalizes and remains robust throughout.",
+        "type": "claim"
+      },
+      {
+        "id": "claim_11",
+        "label": "[result_claim] We observe consistent gains, and the improvements look significant relative to\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_12",
+        "label": "[limitation_claim] However, the method does not yet handle noisy inputs well, and a careful treatm\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_13",
+        "label": "[novelty_claim] We have presented the first approach that solves generalization, stays robust,\u2026",
+        "type": "claim"
+      },
+      {
+        "id": "claim_14",
+        "label": "[novelty_claim] The method is novel and, we argue, generalizes to any future task.",
+        "type": "claim"
+      },
+      {
+        "id": "overclaim_1",
+        "label": "first, generalizes, solves",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_2",
+        "label": "novel, robust, generalizes, proves",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_3",
+        "label": "significant, state of the art",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_4",
+        "label": "generalizes",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_5",
+        "label": "solves",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_6",
+        "label": "novel, robust, proves",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_7",
+        "label": "robust, generalizes",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_8",
+        "label": "significant",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_9",
+        "label": "first, significant, robust, generalizes, solves, proves",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "overclaim_10",
+        "label": "novel, generalizes",
+        "type": "overclaim_risk"
+      },
+      {
+        "id": "gap_1",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_2",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_3",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_4",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_5",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_6",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_7",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_8",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_9",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_10",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "gap_11",
+        "label": "evidence gap",
+        "type": "evidence_gap"
+      },
+      {
+        "id": "repro_1",
+        "label": "missing_code",
+        "type": "reproducibility_risk"
+      },
+      {
+        "id": "repro_2",
+        "label": "missing_data",
+        "type": "reproducibility_risk"
+      },
+      {
+        "id": "repro_3",
+        "label": "missing_parameters",
+        "type": "reproducibility_risk"
+      },
+      {
+        "id": "repro_4",
+        "label": "unclear_dataset",
+        "type": "reproducibility_risk"
+      },
+      {
+        "id": "repro_5",
+        "label": "unsupported_metrics",
+        "type": "reproducibility_risk"
+      }
+    ]
+  },
+  "overclaims": [
+    {
+      "claim_id": "claim_1",
+      "id": "overclaim_1",
+      "reason": "Claims novelty/priority without an explicit comparison.",
+      "section": "Abstract",
+      "terms": [
+        "first",
+        "generalizes",
+        "solves"
+      ],
+      "text": "We present the first method that solves the long-standing problem of generalization in learning systems."
+    },
+    {
+      "claim_id": "claim_2",
+      "id": "overclaim_2",
+      "reason": "Claims novelty/priority without an explicit comparison.",
+      "section": "Abstract",
+      "terms": [
+        "novel",
+        "robust",
+        "generalizes",
+        "proves"
+      ],
+      "text": "Our novel approach generalizes to any task and proves robust under arbitrary conditions."
+    },
+    {
+      "claim_id": "claim_3",
+      "id": "overclaim_3",
+      "reason": "Claims state-of-the-art; verify against an explicit comparison.",
+      "section": "Abstract",
+      "terms": [
+        "significant",
+        "state of the art"
+      ],
+      "text": "We claim significant gains and argue that the method sets a new state of the art."
+    },
+    {
+      "claim_id": "claim_4",
+      "id": "overclaim_4",
+      "reason": "Strong language; verify the wording is supported by the evidence.",
+      "section": "Introduction",
+      "terms": [
+        "generalizes"
+      ],
+      "text": "Earlier approaches struggle to generalize beyond the setting they were designed for."
+    },
+    {
+      "claim_id": "claim_5",
+      "id": "overclaim_5",
+      "reason": "Strong language; verify the wording is supported by the evidence.",
+      "section": "Introduction",
+      "terms": [
+        "solves"
+      ],
+      "text": "We introduce a method that, we argue, solves this difficulty once and for all."
+    },
+    {
+      "claim_id": "claim_6",
+      "id": "overclaim_6",
+      "reason": "Claims novelty/priority without an explicit comparison.",
+      "section": "Introduction",
+      "terms": [
+        "novel",
+        "robust",
+        "proves"
+      ],
+      "text": "The idea is novel, and we expect it to prove robust where previous ideas fall short."
+    },
+    {
+      "claim_id": "claim_10",
+      "id": "overclaim_7",
+      "reason": "Strong language; verify the wording is supported by the evidence.",
+      "section": "Results",
+      "terms": [
+        "robust",
+        "generalizes"
+      ],
+      "text": "The method generalizes and remains robust throughout."
+    },
+    {
+      "claim_id": "claim_11",
+      "id": "overclaim_8",
+      "reason": "Uses 'significant' without inline statistical support (p-value, CI, etc.).",
+      "section": "Results",
+      "terms": [
+        "significant"
+      ],
+      "text": "We observe consistent gains, and the improvements look significant relative to what one would naively expect."
+    },
+    {
+      "claim_id": "claim_13",
+      "id": "overclaim_9",
+      "reason": "Uses 'significant' without inline statistical support (p-value, CI, etc.).",
+      "section": "Conclusion",
+      "terms": [
+        "first",
+        "significant",
+        "robust",
+        "generalizes",
+        "solves",
+        "proves"
+      ],
+      "text": "We have presented the first approach that solves generalization, stays robust, and proves significant in practice."
+    },
+    {
+      "claim_id": "claim_14",
+      "id": "overclaim_10",
+      "reason": "Claims novelty/priority without an explicit comparison.",
+      "section": "Conclusion",
+      "terms": [
+        "novel",
+        "generalizes"
+      ],
+      "text": "The method is novel and, we argue, generalizes to any future task."
+    }
+  ],
+  "replay": {
+    "audit_framing": "DESi performs an internal consistency and overreach audit of its own documentation. DESi does not validate itself.",
+    "core_identity": 1.0,
+    "desi_library": "desi-governance",
+    "desi_version": "0.1.0a0",
+    "forbidden_term_hits": [],
+    "input_hash": "f8e4f3f2ef55721a21e9f202ee3e1ae5c7f2fc8546e545425f6733be7ab03476",
+    "offline_mode": true,
+    "output_hash": "17144c3bb1b14c30e9bce6c4c067b5e8e1de4c97a0271453fcefd1e3a87fff4b",
+    "pipeline_version": "workbench-mvp-0.1.0a0"
+  },
+  "reproducibility_risks": [
+    {
+      "detail": "No link or statement that the source code is available.",
+      "id": "repro_1",
+      "risk_type": "missing_code"
+    },
+    {
+      "detail": "No statement that the underlying data are available.",
+      "id": "repro_2",
+      "risk_type": "missing_data"
+    },
+    {
+      "detail": "No hyperparameters, seeds, or training details reported.",
+      "id": "repro_3",
+      "risk_type": "missing_parameters"
+    },
+    {
+      "detail": "A dataset is mentioned but not identified by name, size, or construction.",
+      "id": "repro_4",
+      "risk_type": "unclear_dataset"
+    },
+    {
+      "detail": "Metrics reported without a measurement protocol or variance/significance.",
+      "id": "repro_5",
+      "risk_type": "unsupported_metrics"
+    }
+  ],
+  "review_id": "f8e4f3f2ef55721a21e9f202ee3e1ae5c7f2fc8546e545425f6733be7ab03476",
+  "reviewer_questions": [
+    "Claim claim_1 (first, generalizes, solves): Claims novelty/priority without an explicit comparison. Is the wording justified?",
+    "Claim claim_2 (novel, robust, generalizes, proves): Claims novelty/priority without an explicit comparison. Is the wording justified?",
+    "Claim claim_3 (significant, state of the art): Claims state-of-the-art; verify against an explicit comparison. Is the wording justified?",
+    "Claim claim_4 (generalizes): Strong language; verify the wording is supported by the evidence. Is the wording justified?",
+    "Claim claim_5 (solves): Strong language; verify the wording is supported by the evidence. Is the wording justified?",
+    "Claim claim_6 (novel, robust, proves): Claims novelty/priority without an explicit comparison. Is the wording justified?",
+    "Claim claim_10 (robust, generalizes): Strong language; verify the wording is supported by the evidence. Is the wording justified?",
+    "Claim claim_11 (significant): Uses 'significant' without inline statistical support (p-value, CI, etc.). Is the wording justified?",
+    "Claim claim_13 (first, significant, robust, generalizes, solves, proves): Uses 'significant' without inline statistical support (p-value, CI, etc.). Is the wording justified?",
+    "Claim claim_14 (novel, generalizes): Claims novelty/priority without an explicit comparison. Is the wording justified?",
+    "What evidence supports claim claim_1? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_2? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_3? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_4? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_5? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_6? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_8? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_10? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_11? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_13? It lacks inline data, a citation, or a table/figure.",
+    "What evidence supports claim claim_14? It lacks inline data, a citation, or a table/figure.",
+    "Can the authors provide a link to the source code to reproduce the results?",
+    "Are the underlying data available for independent inspection?",
+    "What exact hyperparameters, seeds, and training settings were used?",
+    "Which dataset (name, size, splits) was used, and how was it constructed?",
+    "How were the metrics computed (protocol, test set, variance/significance)?"
+  ],
+  "title": "A Novel Method That Solves Generalization and Proves Robust Across Tasks",
+  "unsupported_claims": [
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_1",
+      "overclaim_terms": [
+        "first",
+        "generalizes",
+        "solves"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "We present the first method that solves the long-standing problem of generalization in learning systems."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_2",
+      "overclaim_terms": [
+        "novel",
+        "robust",
+        "generalizes",
+        "proves"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "Our novel approach generalizes to any task and proves robust under arbitrary conditions."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_3",
+      "overclaim_terms": [
+        "significant",
+        "state of the art"
+      ],
+      "section": "Abstract",
+      "supported": false,
+      "text": "We claim significant gains and argue that the method sets a new state of the art."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_4",
+      "overclaim_terms": [
+        "generalizes"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "Earlier approaches struggle to generalize beyond the setting they were designed for."
+    },
+    {
+      "category": "method_claim",
+      "has_numbers": false,
+      "id": "claim_5",
+      "overclaim_terms": [
+        "solves"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "We introduce a method that, we argue, solves this difficulty once and for all."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_6",
+      "overclaim_terms": [
+        "novel",
+        "robust",
+        "proves"
+      ],
+      "section": "Introduction",
+      "supported": false,
+      "text": "The idea is novel, and we expect it to prove robust where previous ideas fall short."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_8",
+      "overclaim_terms": [],
+      "section": "Method",
+      "supported": false,
+      "text": "The procedure is simple and, we believe, broadly applicable across any domain."
+    },
+    {
+      "category": "generalization_claim",
+      "has_numbers": false,
+      "id": "claim_10",
+      "overclaim_terms": [
+        "robust",
+        "generalizes"
+      ],
+      "section": "Results",
+      "supported": false,
+      "text": "The method generalizes and remains robust throughout."
+    },
+    {
+      "category": "result_claim",
+      "has_numbers": false,
+      "id": "claim_11",
+      "overclaim_terms": [
+        "significant"
+      ],
+      "section": "Results",
+      "supported": false,
+      "text": "We observe consistent gains, and the improvements look significant relative to what one would naively expect."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_13",
+      "overclaim_terms": [
+        "first",
+        "significant",
+        "robust",
+        "generalizes",
+        "solves",
+        "proves"
+      ],
+      "section": "Conclusion",
+      "supported": false,
+      "text": "We have presented the first approach that solves generalization, stays robust, and proves significant in practice."
+    },
+    {
+      "category": "novelty_claim",
+      "has_numbers": false,
+      "id": "claim_14",
+      "overclaim_terms": [
+        "novel",
+        "generalizes"
+      ],
+      "section": "Conclusion",
+      "supported": false,
+      "text": "The method is novel and, we argue, generalizes to any future task."
+    }
+  ],
+  "verdict": "REVIEW_ASSISTANCE_ONLY"
+}
