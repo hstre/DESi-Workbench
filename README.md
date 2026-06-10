@@ -37,12 +37,12 @@ DESi Workbench is like a lab-notebook checker for texts. It asks:
 - Tag every claim with provenance — `method` (`workbench_heuristic`) and a
   replay-stable `content_hash` (DESi `replay_hash` over the normalized text) —
   following SPL's content/method discipline.
-- **Opt-in:** when live mode is enabled (both gates open + a key), also run the
-  **real DESi SPL semantic projection** (LLM backend) and attach its canonical
-  claims as `spl_claims`. Off by default; the offline default stays the
-  transparent heuristic, and `spl_claims` is kept out of the replay hash
-  (online → non-deterministic). The deterministic SPL backend is intentionally
-  a narrow demo, so real semantic projection is the live (LLM) path.
+- **Cross-review similarity (a local Layer 9).** Every review's claims are
+  appended to a shared, append-only claim ledger; a new review reports which of
+  its claims were already seen in prior reviews — **exact** (same `content_hash`)
+  or **lexical** (Jaccard token overlap). Deterministic and offline; kept out of
+  the replay hash (history-dependent). Semantic/paraphrase similarity would need
+  SPL's online LLM projection and is a separate, future opt-in tier.
 
 ## 3. What it cannot do (yet)
 

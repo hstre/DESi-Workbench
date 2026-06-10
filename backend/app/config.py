@@ -41,10 +41,6 @@ class Settings:
     offline_mode: bool = True
     allow_live_llm_calls: bool = False
     api_key_env: str = "DESI_WORKBENCH_API_KEY"
-    # OpenAI-compatible endpoint/model for the opt-in live SPL projection.
-    # Not secrets (the key lives in the env var named by api_key_env).
-    llm_base_url: str = "https://openrouter.ai/api/v1"
-    llm_model: str = "deepseek/deepseek-chat"
     data_dir: Path = _REPO_ROOT / "data" / "reviews"
     cors_origins: tuple[str, ...] = ("http://localhost:3000",)
 
@@ -73,8 +69,6 @@ def load_settings() -> Settings:
         offline_mode=_env_bool("DESI_WORKBENCH_OFFLINE_MODE", True),
         allow_live_llm_calls=_env_bool("DESI_WORKBENCH_ALLOW_LIVE_LLM_CALLS", False),
         api_key_env=os.environ.get("DESI_WORKBENCH_API_KEY_ENV", "DESI_WORKBENCH_API_KEY"),
-        llm_base_url=os.environ.get("DESI_WORKBENCH_LLM_BASE_URL", "https://openrouter.ai/api/v1"),
-        llm_model=os.environ.get("DESI_WORKBENCH_LLM_MODEL", "deepseek/deepseek-chat"),
         data_dir=Path(data_dir) if data_dir else (_REPO_ROOT / "data" / "reviews"),
     )
 

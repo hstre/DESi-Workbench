@@ -44,15 +44,6 @@ class Claim(BaseModel):
     content_hash: str = ""
 
 
-class SplClaim(BaseModel):
-    """A claim from the REAL DESi SPL semantic projection (opt-in, live-mode
-    only). Carries DESi's canonical content + governed method
-    (`llm_semantic_projection`). Empty unless live calls are enabled."""
-    id: str
-    content: str
-    method: str = "llm_semantic_projection"
-
-
 class Overclaim(BaseModel):
     id: str
     claim_id: str
@@ -105,6 +96,21 @@ class Replay(BaseModel):
     forbidden_term_hits: list[str] = Field(default_factory=list)
 
 
+class CrossClaimMatch(BaseModel):
+    """A claim in THIS review that matches/resembles a claim from a PRIOR review,
+    found deterministically in the shared claim ledger (Layer 9).
+
+    ``match_type`` is ``exact`` (same content_hash) or ``lexical`` (Jaccard over
+    normalized token sets >= threshold). ``score`` is 1.0 for exact, else Jaccard.
+    """
+    claim_id: str
+    match_type: str
+    score: float
+    prior_review_id: str
+    prior_claim_id: str
+    prior_text: str
+
+
 class ReviewResponse(BaseModel):
     review_id: str
     title: str
@@ -117,6 +123,7 @@ class ReviewResponse(BaseModel):
     graph: Graph = Field(default_factory=Graph)
     replay: Replay
     verdict: str
-    # Real DESi SPL semantic projection — populated only in live mode (opt-in);
-    # empty otherwise. Outside the deterministic replay hash by design (online).
-    spl_claims: list[SplClaim] = Field(default_factory=list)
+    # Layer 9: claims in THIS review that match/resemble claims from PRIOR
+    # reviews in the shared claim ledger. Deterministic (exact + lexical).
+    # History-dependent, so kept OUTSIDE the replay hash by design.
+    cross_review: list[CrossClaimMatch] = Field(default_factory=list)

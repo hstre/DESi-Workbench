@@ -16,12 +16,6 @@ export interface Claim {
   content_hash?: string;
 }
 
-export interface SplClaim {
-  id: string;
-  content: string;
-  method: string;
-}
-
 export interface Overclaim {
   id: string;
   claim_id: string;
@@ -86,8 +80,17 @@ export interface Review {
   graph: Graph;
   replay: Replay;
   verdict: string;
-  // Real DESi SPL projection — present only in live mode (opt-in).
-  spl_claims?: SplClaim[];
+  // Layer 9: claims here that match/resemble claims from prior reviews.
+  cross_review?: CrossClaimMatch[];
+}
+
+export interface CrossClaimMatch {
+  claim_id: string;
+  match_type: string;
+  score: number;
+  prior_review_id: string;
+  prior_claim_id: string;
+  prior_text: string;
 }
 
 export interface Health {
