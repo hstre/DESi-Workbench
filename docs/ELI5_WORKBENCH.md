@@ -21,6 +21,11 @@ questions:
    "state of the art" are flagged as **overclaim risks** — especially
    when there is no comparison or statistics to back them up.
 
+4. **Have I seen this claim before?**
+   It remembers the claims from earlier reviews (in a shared notebook) and
+   tells you when a claim here already appeared in another paper — either
+   word-for-word the same, or very close. Handy for spotting repeats.
+
 It also points out **reproducibility risks** (no code link, no data, no
 baselines, no hyperparameters, vague dataset, metrics without a method),
 draws a little **claim graph**, and writes a **report** you can download.

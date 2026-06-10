@@ -38,7 +38,20 @@ as core changes:
   Workbench-level heuristics, documented inline.
 - **Claim graph builder** (`graph_builder.py`): a simple JSON projection
   for visualization.
+- **Claim provenance + identity**: each claim carries `method`
+  (`workbench_heuristic`) and a `content_hash` computed with the core
+  `replay_hash` over normalized text. Uses the core primitive; the
+  normalization + tagging are Workbench-level.
+- **Cross-review similarity ledger** (`claim_ledger.py`, a local Layer 9):
+  a shared, append-only SQLite store with exact (`content_hash`) + lexical
+  (Jaccard) matching across reviews. Product feature, stays local.
 - **File storage** (`storage.py`): MVP persistence under `data/reviews/`.
+
+> **Available but used only as a future opt-in:** `desi.spl_adapter` (real
+> SPL semantic projection, LLM backend) now ships in `desi-governance`. It
+> is the right home for *semantic/paraphrase* similarity in Layer 9, but it
+> is online/non-deterministic, so the Workbench keeps it out of the offline
+> core and would wire it as an explicit opt-in tier in a separate task.
 
 ## Candidate requests for a FUTURE task (not implemented, not urgent)
 

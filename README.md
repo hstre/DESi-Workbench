@@ -11,9 +11,10 @@ library as an installable dependency.
 ## 1. What is DESi Workbench?
 
 A small web app (FastAPI backend + Next.js frontend) that takes a paper or
-pasted text and surfaces what DESi can see about it: extracted claims,
-evidence gaps, overclaim risks, reproducibility risks, a simple claim
-graph, a replay/audit trace, and an exportable report.
+pasted text and surfaces what DESi can see about it: extracted claims (each
+with provenance + a stable identity), evidence gaps, overclaim risks,
+reproducibility risks, a simple claim graph, **cross-review similarity** (a
+local Layer 9), a replay/audit trace, and an exportable report.
 
 ### ELI5
 
@@ -48,8 +49,11 @@ DESi Workbench is like a lab-notebook checker for texts. It asks:
 
 - It is **not peer review** and never accepts/rejects a paper.
 - No PDF parsing yet (`.txt` / `.md` / paste only).
-- No LLM calls in the MVP (offline-only; see below).
-- No login, multi-user, cloud, or database — file storage only.
+- No LLM calls in the offline core (offline-only; see below).
+- Cross-review similarity is **exact + lexical only** — semantic/paraphrase
+  matching needs SPL's online LLM projection and is a future opt-in tier.
+- No login, multi-user, or cloud. Reviews are file storage; the cross-review
+  claim ledger is a small local SQLite file (`data/`, gitignored).
 - It does not determine truth or guarantee correctness.
 
 ## 4. Installation
