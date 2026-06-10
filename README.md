@@ -34,6 +34,15 @@ DESi Workbench is like a lab-notebook checker for texts. It asks:
 - Show claim list, claim details, graph, evidence gaps, replay/audit
   trace, and an exportable Markdown report.
 - Run fully **offline and deterministically** (same input → same output).
+- Tag every claim with provenance — `method` (`workbench_heuristic`) and a
+  replay-stable `content_hash` (DESi `replay_hash` over the normalized text) —
+  following SPL's content/method discipline.
+- **Opt-in:** when live mode is enabled (both gates open + a key), also run the
+  **real DESi SPL semantic projection** (LLM backend) and attach its canonical
+  claims as `spl_claims`. Off by default; the offline default stays the
+  transparent heuristic, and `spl_claims` is kept out of the replay hash
+  (online → non-deterministic). The deterministic SPL backend is intentionally
+  a narrow demo, so real semantic projection is the live (LLM) path.
 
 ## 3. What it cannot do (yet)
 

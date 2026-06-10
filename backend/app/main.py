@@ -6,6 +6,8 @@ calls without both gates explicitly opened (and the MVP makes none).
 """
 from __future__ import annotations
 
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
@@ -61,7 +63,18 @@ def create_review(req: ReviewRequest) -> ReviewResponse:
             status_code=503,
             detail="DESi protected-core identity check failed; refusing to emit a review",
         )
-    review = review_pipeline.run_review(req.title, req.text, settings)
+    # Opt-in, online: build a real OpenAI-compatible llm_call only when BOTH
+    # gates are open and a key is present. Offline default -> None (no network).
+    spl_llm_call = None
+    if settings.live_calls_enabled:
+        api_key = os.environ.get(settings.api_key_env)
+        if api_key:
+            spl_llm_call = desi_adapter.build_llm_call(
+                api_key, settings.llm_base_url, settings.llm_model
+            )
+    review = review_pipeline.run_review(
+        req.title, req.text, settings, spl_llm_call=spl_llm_call
+    )
     storage.save_review(review, req.text)
     return review
 

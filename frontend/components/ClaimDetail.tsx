@@ -36,6 +36,10 @@ export default function ClaimDetail({ claim }: Props) {
             : "none"}
         </code>
       </div>
+      <div className="kv">
+        Method: <code>{claim.method ?? "—"}</code> · Identity:{" "}
+        <code>{claim.content_hash ? claim.content_hash.slice(0, 12) : "—"}</code>
+      </div>
       <p style={{ fontSize: 13 }}>{claim.text}</p>
     </div>
   );

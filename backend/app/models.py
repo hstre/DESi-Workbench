@@ -37,6 +37,20 @@ class Claim(BaseModel):
     has_numbers: bool = False
     overclaim_terms: list[str] = Field(default_factory=list)
     supported: bool = True
+    # Provenance + stable identity (SPL content/method discipline).
+    # `method` names HOW the claim was derived; `content_hash` is a
+    # replay-stable identity over the normalized claim text (DESi replay_hash).
+    method: str = "workbench_heuristic"
+    content_hash: str = ""
+
+
+class SplClaim(BaseModel):
+    """A claim from the REAL DESi SPL semantic projection (opt-in, live-mode
+    only). Carries DESi's canonical content + governed method
+    (`llm_semantic_projection`). Empty unless live calls are enabled."""
+    id: str
+    content: str
+    method: str = "llm_semantic_projection"
 
 
 class Overclaim(BaseModel):
@@ -103,3 +117,6 @@ class ReviewResponse(BaseModel):
     graph: Graph = Field(default_factory=Graph)
     replay: Replay
     verdict: str
+    # Real DESi SPL semantic projection — populated only in live mode (opt-in);
+    # empty otherwise. Outside the deterministic replay hash by design (online).
+    spl_claims: list[SplClaim] = Field(default_factory=list)

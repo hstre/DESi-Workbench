@@ -47,7 +47,13 @@ from .models import (
     Replay,
     ReproRisk,
     ReviewResponse,
+    SplClaim,
 )
+
+# Type alias for the injectable, online SPL llm_call (opt-in, live mode only).
+from typing import Callable, Optional  # noqa: E402
+
+SplLlmCall = Optional[Callable[[str], str]]
 
 # --- section parsing --------------------------------------------------
 _HEADER_RE = re.compile(r"^(#{1,6})\s+(.*\S)\s*$")
@@ -250,6 +256,8 @@ def analyze(title: str, text: str) -> Analysis:
                 has_numbers=has_numbers,
                 overclaim_terms=terms,
                 supported=supported,
+                method="workbench_heuristic",
+                content_hash=desi_adapter.claim_identity(sentence),
             )
             an.claims.append(claim)
 
@@ -369,8 +377,21 @@ def _build_reviewer_questions(an: Analysis) -> list[str]:
     return questions
 
 
-def run_review(title: str | None, text: str, settings: Settings) -> ReviewResponse:
-    """Run the full deterministic review and assemble a replay-stable response."""
+def run_review(
+    title: str | None,
+    text: str,
+    settings: Settings,
+    *,
+    spl_llm_call: SplLlmCall = None,
+) -> ReviewResponse:
+    """Run the full deterministic review and assemble a replay-stable response.
+
+    The deterministic core (claims, gaps, graph, hashes) is always offline.
+    If live calls are enabled AND an ``spl_llm_call`` is supplied, the REAL
+    DESi SPL semantic projection runs in addition and its canonical claims are
+    attached as ``spl_claims`` — deliberately OUTSIDE the replay hash, because
+    that path is online and non-deterministic.
+    """
     an = analyze(title or "", text)
     graph = graph_builder.build_graph(an)
 
@@ -401,6 +422,12 @@ def run_review(title: str | None, text: str, settings: Settings) -> ReviewRespon
         forbidden_term_hits=an.forbidden_term_hits,
     )
 
+    # Opt-in, online: REAL DESi SPL projection — only when live calls are
+    # enabled and a caller-supplied llm_call is present. Outside the hash above.
+    spl_claims: list[SplClaim] = []
+    if settings.live_calls_enabled and spl_llm_call is not None:
+        spl_claims = [SplClaim(**c) for c in desi_adapter.spl_project(text, spl_llm_call)]
+
     return ReviewResponse(
         review_id=input_hash,
         title=an.title,
@@ -413,4 +440,5 @@ def run_review(title: str | None, text: str, settings: Settings) -> ReviewRespon
         graph=graph,
         replay=replay,
         verdict=VERDICT,
+        spl_claims=spl_claims,
     )

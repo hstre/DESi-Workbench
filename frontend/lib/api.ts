@@ -11,6 +11,15 @@ export interface Claim {
   has_numbers: boolean;
   overclaim_terms: string[];
   supported: boolean;
+  // Provenance + stable identity (SPL content/method discipline).
+  method?: string;
+  content_hash?: string;
+}
+
+export interface SplClaim {
+  id: string;
+  content: string;
+  method: string;
 }
 
 export interface Overclaim {
@@ -77,6 +86,8 @@ export interface Review {
   graph: Graph;
   replay: Replay;
   verdict: string;
+  // Real DESi SPL projection — present only in live mode (opt-in).
+  spl_claims?: SplClaim[];
 }
 
 export interface Health {

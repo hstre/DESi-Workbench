@@ -9,5 +9,5 @@ Single verdict: REVIEW_ASSISTANCE_ONLY.
 """
 
 __version__ = "0.1.0a0"
-PIPELINE_VERSION = "workbench-mvp-0.1.0a0"
+PIPELINE_VERSION = "workbench-0.2.0"
 VERDICT = "REVIEW_ASSISTANCE_ONLY"
