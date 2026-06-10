@@ -10,7 +10,15 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 
-from . import PIPELINE_VERSION, VERDICT, __version__, desi_adapter, review_pipeline, storage
+from . import (
+    PIPELINE_VERSION,
+    VERDICT,
+    __version__,
+    claim_ledger,
+    desi_adapter,
+    review_pipeline,
+    storage,
+)
 from .config import settings
 from .models import Graph, ReviewRequest, ReviewResponse
 
@@ -62,6 +70,9 @@ def create_review(req: ReviewRequest) -> ReviewResponse:
             detail="DESi protected-core identity check failed; refusing to emit a review",
         )
     review = review_pipeline.run_review(req.title, req.text, settings)
+    # Layer 9: match this review's claims against the shared ledger (prior
+    # reviews), then record them. Deterministic; outside the replay hash.
+    review.cross_review = claim_ledger.process(settings, review)
     storage.save_review(review, req.text)
     return review
 

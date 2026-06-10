@@ -250,6 +250,8 @@ def analyze(title: str, text: str) -> Analysis:
                 has_numbers=has_numbers,
                 overclaim_terms=terms,
                 supported=supported,
+                method="workbench_heuristic",
+                content_hash=desi_adapter.claim_identity(sentence),
             )
             an.claims.append(claim)
 

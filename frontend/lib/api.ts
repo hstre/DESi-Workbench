@@ -11,6 +11,9 @@ export interface Claim {
   has_numbers: boolean;
   overclaim_terms: string[];
   supported: boolean;
+  // Provenance + stable identity (SPL content/method discipline).
+  method?: string;
+  content_hash?: string;
 }
 
 export interface Overclaim {
@@ -77,6 +80,17 @@ export interface Review {
   graph: Graph;
   replay: Replay;
   verdict: string;
+  // Layer 9: claims here that match/resemble claims from prior reviews.
+  cross_review?: CrossClaimMatch[];
+}
+
+export interface CrossClaimMatch {
+  claim_id: string;
+  match_type: string;
+  score: number;
+  prior_review_id: string;
+  prior_claim_id: string;
+  prior_text: string;
 }
 
 export interface Health {

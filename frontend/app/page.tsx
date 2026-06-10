@@ -14,6 +14,7 @@ import GraphView from "@/components/GraphView";
 import EvidenceGapPanel from "@/components/EvidenceGapPanel";
 import ReplayPanel from "@/components/ReplayPanel";
 import ReportPanel from "@/components/ReportPanel";
+import CrossReviewPanel from "@/components/CrossReviewPanel";
 
 export default function Page() {
   const [health, setHealth] = useState<Health | null>(null);
@@ -91,6 +92,7 @@ export default function Page() {
             <>
               <GraphView graph={review.graph} />
               <EvidenceGapPanel review={review} />
+              <CrossReviewPanel review={review} />
               <ReplayPanel replay={review.replay} verdict={review.verdict} />
             </>
           ) : (

@@ -37,6 +37,11 @@ class Claim(BaseModel):
     has_numbers: bool = False
     overclaim_terms: list[str] = Field(default_factory=list)
     supported: bool = True
+    # Provenance + stable identity (SPL content/method discipline).
+    # `method` names HOW the claim was derived; `content_hash` is a
+    # replay-stable identity over the normalized claim text (DESi replay_hash).
+    method: str = "workbench_heuristic"
+    content_hash: str = ""
 
 
 class Overclaim(BaseModel):
@@ -91,6 +96,21 @@ class Replay(BaseModel):
     forbidden_term_hits: list[str] = Field(default_factory=list)
 
 
+class CrossClaimMatch(BaseModel):
+    """A claim in THIS review that matches/resembles a claim from a PRIOR review,
+    found deterministically in the shared claim ledger (Layer 9).
+
+    ``match_type`` is ``exact`` (same content_hash) or ``lexical`` (Jaccard over
+    normalized token sets >= threshold). ``score`` is 1.0 for exact, else Jaccard.
+    """
+    claim_id: str
+    match_type: str
+    score: float
+    prior_review_id: str
+    prior_claim_id: str
+    prior_text: str
+
+
 class ReviewResponse(BaseModel):
     review_id: str
     title: str
@@ -103,3 +123,7 @@ class ReviewResponse(BaseModel):
     graph: Graph = Field(default_factory=Graph)
     replay: Replay
     verdict: str
+    # Layer 9: claims in THIS review that match/resemble claims from PRIOR
+    # reviews in the shared claim ledger. Deterministic (exact + lexical).
+    # History-dependent, so kept OUTSIDE the replay hash by design.
+    cross_review: list[CrossClaimMatch] = Field(default_factory=list)

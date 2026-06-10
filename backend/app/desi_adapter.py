@@ -16,6 +16,7 @@ No core change is made without a separate task.
 """
 from __future__ import annotations
 
+import re
 from importlib import metadata
 
 from desi.core.governance_core import core_identity
@@ -69,3 +70,18 @@ def governance_health() -> dict:
 def governance_intact() -> bool:
     """True iff the protected-core identity is exactly 1.0."""
     return identity() == 1.0
+
+
+# --- C: stable claim identity (offline, deterministic) ----------------------
+_WS = re.compile(r"\s+")
+
+
+def canonical_text(text: str) -> str:
+    """Normalize a claim for stable identity: lowercase, collapse whitespace,
+    strip trailing sentence punctuation. Operators/content are preserved."""
+    return _WS.sub(" ", text.strip().lower()).rstrip(" ?!.")
+
+
+def claim_identity(text: str) -> str:
+    """Replay-stable identity for a claim's normalized text (DESi replay_hash)."""
+    return replay_hash(canonical_text(text))
