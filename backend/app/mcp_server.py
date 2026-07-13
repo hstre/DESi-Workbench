@@ -3,23 +3,18 @@
 Run locally:
     python -m app.mcp_server
 
-Then connect an MCP client to http://localhost:8000/mcp.
+Then open http://localhost:8000/ for the cockpit or connect an MCP client to
+http://localhost:8000/mcp.
 """
 from __future__ import annotations
 
-import io
 import os
-import urllib.parse
-import urllib.request
-import zipfile
 from typing import Any
-from xml.etree import ElementTree
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import ToolAnnotations
 
-from .epistemic_review import EpistemicReviewOrchestrator
-from .epistemic_review import adapters
+from .epistemic_review import EpistemicReviewOrchestrator, adapters
 from .epistemic_review.orchestrator import PROTOCOL_VERSION
 from .epistemic_review.schemas import (
     STAGE_ORDER,
@@ -27,6 +22,8 @@ from .epistemic_review.schemas import (
     StageSubmission,
     StartReviewInput,
 )
+from .file_ingest import DOCUMENT_LIMIT, DOWNLOAD_LIMIT, file_ref_to_text
+from .ui import register_ui
 
 
 INSTRUCTIONS = (
@@ -59,61 +56,6 @@ _BOUNDED_WRITE = ToolAnnotations(
 )
 
 
-def _download(ref: FileRef) -> bytes:
-    parsed = urllib.parse.urlparse(str(ref.download_url))
-    if parsed.scheme != "https":
-        raise ValueError("file download_url must use HTTPS")
-    req = urllib.request.Request(
-        str(ref.download_url), headers={"User-Agent": "DESi-Workbench/0.3"}
-    )
-    limit = 10_000_000
-    with urllib.request.urlopen(req, timeout=20) as response:  # noqa: S310
-        if urllib.parse.urlparse(response.geturl()).scheme != "https":
-            raise ValueError("file download redirected to a non-HTTPS URL")
-        data = response.read(limit + 1)
-    if len(data) > limit:
-        raise ValueError("file exceeds the 10 MB transport limit")
-    return data
-
-
-def _docx_text(data: bytes) -> str:
-    with zipfile.ZipFile(io.BytesIO(data)) as archive:
-        xml = archive.read("word/document.xml")
-    root = ElementTree.fromstring(xml)
-    chunks: list[str] = []
-    ns = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
-    for paragraph in root.iter(ns + "p"):
-        text = "".join(node.text or "" for node in paragraph.iter(ns + "t"))
-        if text.strip():
-            chunks.append(text.strip())
-    return "\n\n".join(chunks)
-
-
-def _pdf_text(data: bytes) -> str:
-    try:
-        import fitz  # type: ignore
-    except ImportError as exc:  # pragma: no cover
-        raise ValueError("PDF support requires the 'files' extra (PyMuPDF)") from exc
-    doc = fitz.open(stream=data, filetype="pdf")
-    return "\n\n".join(page.get_text("text") for page in doc)
-
-
-def _file_text(ref: FileRef) -> str:
-    data = _download(ref)
-    name = (ref.file_name or "").lower()
-    mime = (ref.mime_type or "").lower()
-    if name.endswith(".docx") or "wordprocessingml" in mime:
-        return _docx_text(data)
-    if name.endswith(".pdf") or mime == "application/pdf":
-        return _pdf_text(data)
-    if name.endswith((".txt", ".md", ".markdown")) or mime.startswith("text/") or not mime:
-        try:
-            return data.decode("utf-8-sig")
-        except UnicodeDecodeError as exc:
-            raise ValueError("text files must be UTF-8") from exc
-    raise ValueError(f"unsupported file type: {ref.mime_type or ref.file_name}")
-
-
 @mcp.tool(
     title="Inspect epistemic review capabilities",
     description=(
@@ -132,8 +74,12 @@ def get_capabilities() -> dict[str, Any]:
         "file_support": {
             "formats": ["utf-8-text", "markdown", "docx", "pdf"],
             "download_transport": "https-only",
-            "download_limit_bytes": 10_000_000,
-            "document_limit_bytes": 5_000_000,
+            "download_limit_bytes": DOWNLOAD_LIMIT,
+            "document_limit_bytes": DOCUMENT_LIMIT,
+        },
+        "interfaces": {
+            "browser_cockpit": "/",
+            "mcp": "/mcp",
         },
         "scope_verdict": "REVIEW_ASSISTANCE_ONLY",
     }
@@ -160,7 +106,11 @@ def start_review(
     request = StartReviewInput(
         text=text, paper=paper, title=title, modes=modes, focus=focus
     )
-    manuscript = request.text if request.text is not None else _file_text(request.paper)  # type: ignore[arg-type]
+    manuscript = (
+        request.text
+        if request.text is not None
+        else file_ref_to_text(request.paper)  # type: ignore[arg-type]
+    )
     return _orchestrator.start(request, manuscript)
 
 
@@ -204,6 +154,9 @@ def submit_stage(run_id: str, stage_id: str, result: dict[str, Any]) -> dict[str
 )
 def finalize_review(run_id: str) -> dict[str, Any]:
     return _orchestrator.finalize(run_id)
+
+
+register_ui(mcp, _orchestrator, get_capabilities)
 
 
 def main() -> None:
