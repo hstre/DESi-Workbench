@@ -1,0 +1,14 @@
+.git
+.github
+frontend
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+backend/.venv
+backend/data
+backend/*.egg-info
+node_modules
+.env
+.DS_Store
