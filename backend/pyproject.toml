@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "desi-workbench-backend"
-version = "0.1.0a0"
-description = "DESi Workbench backend: a FastAPI app that makes the DESi governance library visible (paper review assistant). It does not modify or re-implement the DESi core."
+version = "0.4.0a0"
+description = "DESi Workbench backend, browser cockpit and seven-role MCP epistemic-review server."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Hanns-Steffen Rentschler" }]
-keywords = ["desi", "epistemic audit", "paper review", "reviewer assistant", "fastapi"]
+keywords = ["desi", "epistemic audit", "paper review", "mcp", "chatgpt app", "fastapi"]
 
 # The workbench uses the REAL DESi governance library as an installable
 # dependency. It never re-implements the replay kernel, governance core,
@@ -20,10 +20,26 @@ dependencies = [
     "fastapi>=0.110",
     "uvicorn>=0.27",
     "python-dotenv>=1.0",
+    "pydantic>=2.6,<3.0",
+    "mcp>=1.27,<2",
 ]
 
 [project.optional-dependencies]
 test = ["pytest>=8.0", "httpx>=0.27"]
+files = ["pymupdf>=1.26"]
+# Optional for local fallback operation, mandatory in the published container
+# and the ecosystem CI job. Commit pins make provenance reproducible.
+ecosystem = [
+    "kevin @ git+https://github.com/hstre/Kevin@feecc15b210f98c478f006c794091f4f3b01a9d0",
+    "doktores @ git+https://github.com/hstre/Doktores@006d37eb24d0e243f9b22decc6bf8c9e28402c91",
+]
 
-[tool.setuptools]
-packages = ["app"]
+[project.scripts]
+desi-workbench-mcp = "app.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["static/*.html", "static/*.css", "static/*.js"]

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DESi Epistemic Review</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">DESi · Kevin · Doktores</div>
+      <h1>Epistemic Review Cockpit</h1>
+    </div>
+    <div id="system-status" class="status-pill neutral">System wird geprüft</div>
+  </header>
+
+  <main class="shell">
+    <section class="hero panel">
+      <div>
+        <h2>Manuskript strukturiert prüfen</h2>
+        <p>DESi zerlegt Claims, Kevin sucht blinde Räume, sieben getrennte Doktores-Rollen bearbeiten den Forschungsweg. Das System bestätigt keine Wahrheit.</p>
+      </div>
+      <div class="scope-badge">REVIEW_ASSISTANCE_ONLY</div>
+    </section>
+
+    <section id="start-panel" class="panel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Neuer Lauf</div>
+          <h2>Dokument laden</h2>
+        </div>
+        <button id="restore-run" class="button ghost hidden" type="button">Letzten Lauf öffnen</button>
+      </div>
+
+      <form id="review-form">
+        <div class="form-grid">
+          <label>
+            <span>Titel</span>
+            <input id="title" name="title" type="text" placeholder="Optionaler Manuskripttitel">
+          </label>
+          <label>
+            <span>Prüffokus</span>
+            <input id="focus" name="focus" type="text" placeholder="Zum Beispiel: Grenzfälle, Evidenz, Methodik">
+          </label>
+        </div>
+
+        <label class="file-drop" id="file-drop">
+          <input id="file" type="file" accept=".txt,.md,.markdown,.docx,.pdf,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          <strong>Datei auswählen oder hier ablegen</strong>
+          <span>TXT, Markdown, DOCX oder PDF · maximal 10 MB</span>
+          <span id="file-name" class="file-name"></span>
+        </label>
+
+        <div class="or-divider"><span>oder</span></div>
+
+        <label>
+          <span>Manuskripttext</span>
+          <textarea id="manuscript" rows="12" placeholder="Text hier einfügen …"></textarea>
+        </label>
+
+        <div class="actions">
+          <button id="start-button" class="button primary" type="submit">Review starten</button>
+          <span id="start-message" class="message"></span>
+        </div>
+      </form>
+    </section>
+
+    <section id="run-panel" class="hidden">
+      <div class="run-header panel">
+        <div>
+          <div class="eyebrow">Aktiver Lauf</div>
+          <h2 id="run-title">–</h2>
+          <div class="mono" id="run-id">–</div>
+        </div>
+        <div class="run-actions">
+          <button id="copy-run" class="button ghost" type="button">Lauf-ID kopieren</button>
+          <button id="new-run" class="button ghost" type="button">Neuer Lauf</button>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <section class="panel summary-panel">
+          <div class="section-head compact">
+            <div>
+              <div class="eyebrow">Strukturbefund</div>
+              <h2>DESi und Kevin</h2>
+            </div>
+          </div>
+          <div class="metrics">
+            <article><strong id="metric-claims">0</strong><span>Claims</span></article>
+            <article><strong id="metric-unsupported">0</strong><span>Unbelegt</span></article>
+            <article><strong id="metric-overclaims">0</strong><span>Overclaims</span></article>
+            <article><strong id="metric-blindspots">0</strong><span>Blindstellen</span></article>
+          </div>
+          <div class="engine-list" id="engine-list"></div>
+          <div class="tag-block">
+            <h3>Kevin-Blindstellen</h3>
+            <div id="blindspot-tags" class="tags"></div>
+          </div>
+          <div class="tag-block">
+            <h3>Vorgeschlagene Methoden</h3>
+            <div id="method-tags" class="tags"></div>
+          </div>
+        </section>
+
+        <section class="panel stages-panel">
+          <div class="section-head compact">
+            <div>
+              <div class="eyebrow">Doktores</div>
+              <h2>Sieben Rollen</h2>
+            </div>
+            <span id="progress-label" class="progress-label">0 / 7</span>
+          </div>
+          <ol id="stage-list" class="stage-list"></ol>
+        </section>
+      </div>
+
+      <section id="stage-panel" class="panel stage-workspace hidden">
+        <div class="section-head">
+          <div>
+            <div id="stage-position" class="eyebrow">Rolle</div>
+            <h2 id="stage-role">–</h2>
+          </div>
+          <button id="copy-packet" class="button ghost" type="button">Rollenpaket kopieren</button>
+        </div>
+
+        <p id="stage-task" class="stage-task"></p>
+        <div class="workspace-grid">
+          <div>
+            <h3>Verbotene Handlungen</h3>
+            <ul id="forbidden-list" class="rule-list"></ul>
+            <details>
+              <summary>Rollenpaket und Ausgabeschema</summary>
+              <pre id="packet-json" class="code-block"></pre>
+            </details>
+          </div>
+          <div>
+            <label>
+              <span>Rollenergebnis als JSON</span>
+              <textarea id="stage-result" class="json-editor" rows="20" spellcheck="false" placeholder="Hier das strukturierte Ergebnis der Rolle einfügen …"></textarea>
+            </label>
+            <div class="actions">
+              <button id="submit-stage" class="button primary" type="button">Rolle abschließen</button>
+              <button id="format-json" class="button ghost" type="button">JSON formatieren</button>
+              <span id="stage-message" class="message"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="complete-panel" class="panel hidden">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Abgeschlossen</div>
+            <h2>Review-Bericht</h2>
+          </div>
+          <div class="run-actions">
+            <button id="copy-report" class="button ghost" type="button">Bericht kopieren</button>
+            <button id="download-report" class="button primary" type="button">Markdown speichern</button>
+          </div>
+        </div>
+        <pre id="report-markdown" class="report"></pre>
+        <details>
+          <summary>Replay-verifizierbares JSON-Artefakt</summary>
+          <pre id="report-json" class="code-block"></pre>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <span>LLM für Sprache · Regeln für Logik · Mensch als Entscheidungstor</span>
+  </footer>
+
+  <script src="/ui/app.js" defer></script>
+</body>
+</html>
