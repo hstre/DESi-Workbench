@@ -7,8 +7,26 @@ from pydantic import BaseModel, Field, HttpUrl, model_validator
 
 
 ReviewMode = Literal["audit", "extend", "adversarial"]
-StageRole = Literal["theorist", "falsifier", "adversarial_reviewer"]
+StageRole = Literal[
+    "theorist",
+    "literature_scout",
+    "falsifier",
+    "experimental_designer",
+    "method_reviewer",
+    "paper_builder",
+    "adversarial_reviewer",
+]
 StageStatus = Literal["pending", "active", "complete"]
+
+STAGE_ORDER: tuple[StageRole, ...] = (
+    "theorist",
+    "literature_scout",
+    "falsifier",
+    "experimental_designer",
+    "method_reviewer",
+    "paper_builder",
+    "adversarial_reviewer",
+)
 
 
 class FileRef(BaseModel):
@@ -49,6 +67,29 @@ class TheoristResult(BaseModel):
     unresolved_terms: list[str] = Field(default_factory=list)
 
 
+class LiteratureEvidence(BaseModel):
+    target_hypothesis_ids: list[str] = Field(min_length=1)
+    stance: Literal["for", "against", "context"]
+    statement: str = Field(min_length=20)
+    reference: str | None = None
+    source_type: Literal[
+        "manuscript",
+        "citation",
+        "dataset",
+        "counterexample",
+        "unknown",
+    ] = "unknown"
+
+
+class LiteratureScoutResult(BaseModel):
+    related_work: list[str] = Field(default_factory=list, max_length=24)
+    competing_explanations: list[str] = Field(default_factory=list, max_length=24)
+    known_counterexamples: list[str] = Field(default_factory=list, max_length=24)
+    datasets: list[str] = Field(default_factory=list, max_length=24)
+    evidence: list[LiteratureEvidence] = Field(default_factory=list, max_length=48)
+    search_limitations: list[str] = Field(default_factory=list)
+
+
 class Attack(BaseModel):
     hypothesis_id: str = Field(pattern=r"^H[0-9]+$")
     target_claim_ids: list[str] = Field(min_length=1)
@@ -71,6 +112,58 @@ class FalsifierResult(BaseModel):
     weakest_assumption: str = Field(min_length=10)
 
 
+class ExperimentDesign(BaseModel):
+    id: str = Field(pattern=r"^EX[0-9]+$")
+    target_hypothesis_ids: list[str] = Field(min_length=1)
+    design: str = Field(min_length=20)
+    baselines: list[str] = Field(default_factory=list)
+    metrics: list[str] = Field(default_factory=list)
+    stop_criteria: str = Field(min_length=10)
+    reproducibility_requirements: list[str] = Field(default_factory=list)
+
+
+class ExperimentalDesignerResult(BaseModel):
+    experiments: list[ExperimentDesign] = Field(default_factory=list, max_length=12)
+    unresolved_constraints: list[str] = Field(default_factory=list)
+    blocked_reason: str | None = None
+
+    @model_validator(mode="after")
+    def experiment_or_block(self) -> "ExperimentalDesignerResult":
+        if not self.experiments and not self.blocked_reason:
+            raise ValueError("Provide at least one experiment or a blocked_reason")
+        return self
+
+
+class MethodAssessment(BaseModel):
+    experiment_id: str = Field(pattern=r"^EX[0-9]+$")
+    verdict: Literal["sound", "repairable", "unsound"]
+    concerns: list[str] = Field(default_factory=list)
+    required_controls: list[str] = Field(default_factory=list)
+    measurement_risks: list[str] = Field(default_factory=list)
+
+
+class MethodReviewerResult(BaseModel):
+    assessments: list[MethodAssessment] = Field(default_factory=list, max_length=12)
+    cross_cutting_limitations: list[str] = Field(default_factory=list)
+    blocked_reason: str | None = None
+
+    @model_validator(mode="after")
+    def assessment_or_block(self) -> "MethodReviewerResult":
+        if not self.assessments and not self.blocked_reason:
+            raise ValueError("Provide at least one assessment or a blocked_reason")
+        return self
+
+
+class PaperBuilderResult(BaseModel):
+    publication_kind: Literal["paper", "report", "protocol", "replication", "summary"]
+    title: str = Field(min_length=5)
+    markdown: str = Field(min_length=80)
+    included_hypothesis_ids: list[str] = Field(default_factory=list)
+    included_experiment_ids: list[str] = Field(default_factory=list)
+    limitations: list[str] = Field(default_factory=list)
+    open_questions: list[str] = Field(default_factory=list)
+
+
 class ReviewedFinding(BaseModel):
     target: str = Field(min_length=1)
     verdict: Literal["present", "borderline", "discard"]
@@ -80,7 +173,7 @@ class ReviewedFinding(BaseModel):
 
 
 class AdversarialReviewerResult(BaseModel):
-    findings: list[ReviewedFinding] = Field(min_length=1, max_length=24)
+    findings: list[ReviewedFinding] = Field(min_length=1, max_length=36)
     overall: Literal["accept", "revise", "reject"]
     blocking_issues: list[str] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
@@ -88,7 +181,11 @@ class AdversarialReviewerResult(BaseModel):
 
 STAGE_RESULT_MODELS: dict[StageRole, type[BaseModel]] = {
     "theorist": TheoristResult,
+    "literature_scout": LiteratureScoutResult,
     "falsifier": FalsifierResult,
+    "experimental_designer": ExperimentalDesignerResult,
+    "method_reviewer": MethodReviewerResult,
+    "paper_builder": PaperBuilderResult,
     "adversarial_reviewer": AdversarialReviewerResult,
 }
 
