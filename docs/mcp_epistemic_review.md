@@ -1,66 +1,83 @@
-# MCP Epistemic Review v0
+# DESi–Kevin–Doktores MCP epistemic review
 
-This branch exposes the existing DESi Workbench as a small Streamable-HTTP MCP server for ChatGPT and other MCP hosts.
+The Workbench exposes a Streamable-HTTP MCP server at:
 
-## Boundary
-
-The server does **not** contain a hidden reviewer model and does not claim domain expertise. It divides the work:
-
-- **DESi**: deterministic claim extraction, stable identities and overreach/evidence flags.
-- **Kevin**: domain-neutral blind-spot axes and content-free method selection.
-- **Doktores**: separated theorist, falsifier and adversarial-reviewer contracts.
-- **MCP host model**: language and general domain reasoning inside the supplied role packet.
-- **Human**: decides whether any finding changes the manuscript.
-
-The only scope verdict emitted by the server is `REVIEW_ASSISTANCE_ONLY`.
-
-## Tools
-
-1. `start_review` — ingest text or an authorised ChatGPT file reference; run DESi and Kevin.
-2. `get_next_stage` — return the next role packet and exact output schema.
-3. `submit_stage` — validate and append one role result to the hash chain.
-4. `finalize_review` — produce JSON + Markdown after every role is complete.
-
-The server instructions require this sequence and forbid role skipping.
-
-## Install
-
-```bash
-cd backend
-pip install -e ".[test,files,ecosystem]"
+```text
+http://localhost:8000/mcp
 ```
 
-The ecosystem extra pins Kevin and Doktores to audited commits. It is optional: when Kevin is not importable the server uses a transparent set-coverage fallback and records that engine in the artifact.
+The protocol is `epistemic-review-v1`. It separates language generation from
+deterministic routing, validation, state and governance.
 
-## Run
+## Tool order
+
+1. `get_capabilities`
+2. `start_review`
+3. Repeatedly call `get_next_stage` and `submit_stage`
+4. `finalize_review` after `get_next_stage` reports `complete: true`
+
+Stages cannot be skipped, merged or rewritten after completion.
+
+## Seven Doktores roles
+
+1. **Theorist** — formulates falsifiable hypotheses linked to DESi claim IDs.
+2. **Literature Scout** — maps related work, competing explanations, counterexamples, datasets and evidence. Verifiable source types require an explicit reference.
+3. **Falsifier** — attacks hypotheses and records survivors. A generic/critical transition requires a `boundary_change` attack.
+4. **Experimental Designer** — designs minimal reproducible discriminating tests for surviving hypotheses.
+5. **Method Reviewer** — audits every experiment for controls, confounding, measurement risk, stopping rules and reproducibility.
+6. **Paper Builder** — produces a traceable publication artifact without adding evidence or issuing a verdict.
+7. **Adversarial Reviewer** — alone may recommend `accept`, `revise` or `reject`.
+
+Each packet includes an exact Pydantic JSON schema and only the prior role
+outputs that role is allowed to see.
+
+## Engine provenance
+
+`get_capabilities` and every final artifact disclose:
+
+- DESi package version and native claim-audit execution.
+- Kevin package version, native `SpacePredictor` status, coverage engine and any fallback reason.
+- Doktores package version, seven-role protocol, and the fact that this MCP workflow is host-mediated rather than a call to `Doktores().run()`.
+
+Set:
 
 ```bash
+export DESI_REQUIRE_ECOSYSTEM=1
+```
+
+to fail closed when Kevin or Doktores is absent or API-incompatible. The
+published Docker image uses this strict mode.
+
+## File handling
+
+`start_review` accepts either inline text or a ChatGPT file reference through
+`openai/fileParams`.
+
+Supported formats:
+
+- UTF-8 text and Markdown
+- DOCX through the dependency-free OOXML reader
+- PDF through the `files` extra (`PyMuPDF`)
+
+Downloads must remain HTTPS after redirects and are limited to 10 MB. Extracted
+manuscript text is limited to 5 MB.
+
+## State and governance
+
+- Repeated identical starts yield the same run ID.
+- SQLite stage state is append-only after completion.
+- Every activated packet and completed result advances a SHA-256 hash chain.
+- Claim, hypothesis and experiment references are checked before a stage is accepted.
+- The final scope verdict is always `REVIEW_ASSISTANCE_ONLY`.
+- The server does not confirm beliefs or replace peer review.
+
+## Verification
+
+```bash
+python -m pytest -q tests
 python -m app.mcp_server
-# MCP endpoint: http://localhost:8000/mcp
+python scripts/mcp_smoke.py
 ```
 
-Test it with MCP Inspector, then add the HTTPS `/mcp` endpoint in ChatGPT developer mode.
-
-## File support
-
-- UTF-8 `.txt`, `.md`, `.markdown`
-- `.docx` through a dependency-free OOXML reader
-- `.pdf` when the `files` extra is installed (PyMuPDF)
-
-File references are declared through `_meta["openai/fileParams"]`; the temporary download URL is accepted only over HTTPS and read with a hard size limit.
-
-## State and replay
-
-`DESI_MCP_DB` controls the SQLite path (default `data/epistemic_review.sqlite3`). Stage results are append-only after completion. Each stage hash binds:
-
-- run id,
-- role,
-- role input,
-- validated output,
-- previous stage hash.
-
-Repeated `start_review` calls with the same document, modes and focus return the same run.
-
-## v0 integration test
-
-The frozen toy manuscript contains both a generic `U(1)^2` claim and gauge enhancement at `r=1`. The protocol must route a boundary probe and the falsifier must submit a `boundary_change` attack before the deterministic critical-boundary check passes. The test checks the method, not the final physics answer.
+The smoke script uses an actual MCP client and verifies the complete
+Streamable-HTTP tool surface.
