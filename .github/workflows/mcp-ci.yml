@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  test-fallback:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
@@ -41,27 +41,87 @@ jobs:
       - name: Compile modules
         run: python -m compileall -q backend/app
 
-      - name: Run tests
+      - name: Run fallback-capable tests
         env:
           DESI_MCP_DB: ${{ runner.temp }}/epistemic-review.sqlite3
         run: python -m pytest -q backend/tests
 
-      - name: Import MCP server
-        working-directory: backend
-        run: |
-          python - <<'PY'
-          from app.mcp_server import mcp
-          assert mcp is not None
-          print("MCP server import OK")
-          PY
-
-  container:
+  test-native-ecosystem:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+
+      - name: Install DESi, Kevin, Doktores and Workbench
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "desi-governance @ git+https://github.com/hstre/DESi@f0984f440a60293a51f002d388cd030be27acf1e"
+          python -m pip install -e "./backend[files,test,ecosystem]"
+
+      - name: Run strict ecosystem suite
+        env:
+          DESI_REQUIRE_ECOSYSTEM: "1"
+          DESI_MCP_DB: ${{ runner.temp }}/epistemic-review.sqlite3
+        run: python -m pytest -q backend/tests
+
+  transport-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+
+      - name: Install native ecosystem
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "desi-governance @ git+https://github.com/hstre/DESi@f0984f440a60293a51f002d388cd030be27acf1e"
+          python -m pip install -e "./backend[files,ecosystem]"
+
+      - name: Start server and connect with a real MCP client
+        working-directory: backend
+        env:
+          DESI_REQUIRE_ECOSYSTEM: "1"
+          DESI_MCP_HOST: 127.0.0.1
+          DESI_MCP_PORT: "8000"
+          DESI_MCP_DB: ${{ runner.temp }}/transport.sqlite3
+        run: |
+          set -euo pipefail
+          python -m app.mcp_server >mcp-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true; cat mcp-server.log' EXIT
+          python - <<'PY'
+          import socket
+          import time
+
+          deadline = time.time() + 30
+          while time.time() < deadline:
+              with socket.socket() as sock:
+                  if sock.connect_ex(("127.0.0.1", 8000)) == 0:
+                      break
+              time.sleep(0.25)
+          else:
+              raise SystemExit("MCP server did not open port 8000")
+          PY
+          python scripts/mcp_smoke.py
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v3
-      - name: Build container
+      - name: Build container with native ecosystem
         uses: docker/build-push-action@v6
         with:
           context: .
