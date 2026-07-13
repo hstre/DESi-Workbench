@@ -5,7 +5,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     DESI_MCP_HOST=0.0.0.0 \
     DESI_MCP_PORT=8000 \
-    DESI_MCP_DB=/data/epistemic_review.sqlite3
+    DESI_MCP_DB=/data/epistemic_review.sqlite3 \
+    DESI_REQUIRE_ECOSYSTEM=1
 
 WORKDIR /app
 
@@ -17,7 +18,7 @@ COPY backend /app/backend
 
 RUN python -m pip install --upgrade pip \
     && python -m pip install "desi-governance @ git+https://github.com/hstre/DESi@f0984f440a60293a51f002d388cd030be27acf1e" \
-    && python -m pip install "/app/backend[files]"
+    && python -m pip install "/app/backend[files,ecosystem]"
 
 WORKDIR /app/backend
 RUN mkdir -p /data
