@@ -82,13 +82,16 @@ jobs:
           cache: pip
           cache-dependency-path: backend/pyproject.toml
 
+      - name: Check browser JavaScript syntax
+        run: node --check backend/app/static/app.js
+
       - name: Install native ecosystem
         run: |
           python -m pip install --upgrade pip
           python -m pip install "desi-governance @ git+https://github.com/hstre/DESi@f0984f440a60293a51f002d388cd030be27acf1e"
           python -m pip install -e "./backend[files,ecosystem]"
 
-      - name: Start server and connect with a real MCP client
+      - name: Start server and verify cockpit plus MCP client
         working-directory: backend
         env:
           DESI_REQUIRE_ECOSYSTEM: "1"
@@ -101,17 +104,28 @@ jobs:
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true; cat mcp-server.log' EXIT
           python - <<'PY'
-          import socket
+          import json
           import time
+          import urllib.request
 
           deadline = time.time() + 30
           while time.time() < deadline:
-              with socket.socket() as sock:
-                  if sock.connect_ex(("127.0.0.1", 8000)) == 0:
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:8000/", timeout=2) as response:
+                      page = response.read().decode("utf-8")
+                  if "Epistemic Review Cockpit" in page:
                       break
+              except Exception:
+                  pass
               time.sleep(0.25)
           else:
-              raise SystemExit("MCP server did not open port 8000")
+              raise SystemExit("cockpit did not become ready")
+
+          with urllib.request.urlopen("http://127.0.0.1:8000/ui/api/capabilities") as response:
+              capabilities = json.load(response)
+          assert capabilities["interfaces"]["browser_cockpit"] == "/"
+          assert capabilities["interfaces"]["mcp"] == "/mcp"
+          print("COCKPIT_HTTP_OK")
           PY
           python scripts/mcp_smoke.py
 
