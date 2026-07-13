@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "desi-workbench-backend"
-version = "0.3.0a0"
-description = "DESi Workbench backend and seven-role MCP epistemic-review server."
+version = "0.4.0a0"
+description = "DESi Workbench backend, browser cockpit and seven-role MCP epistemic-review server."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -40,3 +40,6 @@ desi-workbench-mcp = "app.mcp_server:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["static/*.html", "static/*.css", "static/*.js"]
