@@ -1,5 +1,13 @@
 # DESi Workbench
 
+> **⚠️ Dieses Projekt ist eingestellt (29. Juli 2026).** Der zentrale Anspruch wurde in vier
+> versiegelten Blindtests widerlegt. Details, Zahlen und eine Entschuldigung:
+> [`PROJEKTABSCHLUSS.md`](PROJEKTABSCHLUSS.md).
+>
+> **⚠️ This project is discontinued (29 July 2026).** Its central claim was refuted in four sealed
+> blind tests. Details, numbers and an apology: [`PROJEKTABSCHLUSS.md`](PROJEKTABSCHLUSS.md).
+
+
 The first usable surface for **DESi**. The Workbench makes DESi's core
 functions visible for reviewing papers and text. It does **not** replace,
 modify, or re-implement DESi — it uses the real `desi-governance`
